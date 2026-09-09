@@ -1,0 +1,22 @@
+# Dependencies
+node_modules/
+__pycache__/
+*.pyc
+
+# Virtual Environments
+venv/
+.venv/
+
+# Weights & Models
+*.onnx
+*.safetensors
+*.bin
+models/
+
+# Environment & Secrets
+.env
+.env.local
+
+# Build Outputs
+dist/
+build/
