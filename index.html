@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Privacy Agent Test Lab</title>
+
+```
+<style>
+    * {
+        box-sizing: border-box;
+    }
+
+    body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        background: #f3f4f6;
+        color: #1f2937;
+    }
+
+    header {
+        background: #111827;
+        color: white;
+        padding: 18px 40px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    header h1 {
+        margin: 0;
+        font-size: 20px;
+    }
+
+    header span {
+        font-size: 13px;
+        color: #9ca3af;
+    }
+
+    nav {
+        background: white;
+        padding: 12px 40px;
+        border-bottom: 1px solid #ddd;
+    }
+
+    nav a {
+        margin-right: 25px;
+        color: #374151;
+        text-decoration: none;
+        font-size: 14px;
+    }
+
+    main {
+        max-width: 1100px;
+        margin: 30px auto;
+        padding: 0 20px;
+    }
+
+    .hero {
+        background: white;
+        padding: 30px;
+        border-radius: 12px;
+        margin-bottom: 25px;
+        border: 1px solid #e5e7eb;
+    }
+
+    .hero h2 {
+        margin-top: 0;
+    }
+
+    .grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+    }
+
+    .card {
+        background: white;
+        padding: 24px;
+        border-radius: 12px;
+        border: 1px solid #e5e7eb;
+    }
+
+    .card h3 {
+        margin-top: 0;
+    }
+
+    label {
+        display: block;
+        margin-top: 14px;
+        margin-bottom: 5px;
+        font-size: 13px;
+        font-weight: bold;
+    }
+
+    input,
+    textarea,
+    select {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #d1d5db;
+        border-radius: 6px;
+        font-size: 14px;
+    }
+
+    textarea {
+        min-height: 100px;
+        resize: vertical;
+    }
+
+    button {
+        margin-top: 18px;
+        padding: 10px 18px;
+        border: none;
+        border-radius: 6px;
+        background: #2563eb;
+        color: white;
+        cursor: pointer;
+    }
+
+    button:hover {
+        background: #1d4ed8;
+    }
+
+    .danger {
+        background: #dc2626;
+    }
+
+    .danger:hover {
+        background: #b91c1c;
+    }
+
+    .success {
+        background: #059669;
+    }
+
+    .info {
+        background: #eff6ff;
+        border-left: 4px solid #2563eb;
+        padding: 14px;
+        margin-top: 15px;
+        font-size: 14px;
+    }
+
+    .sensitive {
+        background: #fef2f2;
+        border: 1px dashed #ef4444;
+        padding: 12px;
+        margin-top: 15px;
+        border-radius: 6px;
+    }
+
+    .badge {
+        display: inline-block;
+        padding: 4px 8px;
+        border-radius: 12px;
+        background: #e5e7eb;
+        font-size: 11px;
+        margin-right: 5px;
+    }
+
+    .person {
+        height: 150px;
+        background: linear-gradient(135deg, #dbeafe, #e0e7ff);
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 70px;
+        margin-top: 15px;
+    }
+
+    .fake-card {
+        margin-top: 15px;
+        background: #1f2937;
+        color: white;
+        padding: 20px;
+        border-radius: 12px;
+        letter-spacing: 2px;
+    }
+
+    .fake-card small {
+        display: block;
+        margin-top: 12px;
+        letter-spacing: normal;
+        color: #9ca3af;
+    }
+
+    .hidden-section {
+        display: none;
+    }
+
+    footer {
+        margin-top: 40px;
+        padding: 30px;
+        text-align: center;
+        color: #6b7280;
+        font-size: 13px;
+    }
+
+    @media (max-width: 800px) {
+        .grid {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>
+```
+
+</head>
+
+<body>
+
+<header>
+    <h1>Privacy Agent Test Lab</h1>
+    <span>Local Vision + Privacy Redaction Demo</span>
+</header>
+
+<nav>
+    <a href="#profile">Profile</a>
+    <a href="#job">Job Application</a>
+    <a href="#payment">Payment</a>
+    <a href="#email">Email</a>
+</nav>
+
+<main>
+
+```
+<section class="hero">
+    <h2>Browser Agent Testing Environment</h2>
+
+    <p>
+        This page intentionally contains different types of information
+        that a privacy-preserving browser agent should be able to identify.
+    </p>
+
+    <div class="info">
+        <strong>Agent task:</strong>
+        Inspect this page, identify sensitive information locally,
+        sanitize it, and determine what action the user is asking for.
+    </div>
+
+    <div style="margin-top: 15px;">
+        <span class="badge">PII</span>
+        <span class="badge">Password</span>
+        <span class="badge">Email</span>
+        <span class="badge">Phone</span>
+        <span class="badge">Payment</span>
+        <span class="badge">Visual Context</span>
+    </div>
+</section>
+
+
+<!-- PROFILE -->
+
+<section class="card" id="profile">
+    <h3>👤 User Profile</h3>
+
+    <p>
+        The following information represents a realistic user profile.
+    </p>
+
+    <form id="profileForm">
+
+        <label for="fullName">Full Name</label>
+        <input
+            id="fullName"
+            name="fullName"
+            autocomplete="name"
+            value="Kshitij Deshpande"
+        >
+
+        <label for="email">Email Address</label>
+        <input
+            id="email"
+            name="email"
+            type="email"
+            autocomplete="email"
+            value="kshitij.deshpande@example.com"
+        >
+
+        <label for="phone">Phone Number</label>
+        <input
+            id="phone"
+            name="phone"
+            type="tel"
+            autocomplete="tel"
+            value="+91 98765 43210"
+        >
+
+        <label for="address">Home Address</label>
+        <textarea id="address" name="address">42 Example Residency
+```
+
+Thane West, Maharashtra
+400601</textarea>
+
+```
+        <label for="password">Password</label>
+        <input
+            id="password"
+            name="password"
+            type="password"
+            value="SuperSecretPassword123!"
+        >
+
+        <button type="button" onclick="profileSubmit()">
+            Save Profile
+        </button>
+
+    </form>
+
+    <div class="sensitive">
+        🔴 <strong>Sensitive data:</strong>
+        Name, email, phone, address and password should NOT be sent
+        to the remote AI server in their original form.
+    </div>
+</section>
+
+
+<div class="grid">
+
+    <!-- JOB APPLICATION -->
+
+    <section class="card" id="job">
+        <h3>💼 Job Application</h3>
+
+        <p>
+            A user wants the browser agent to help complete this
+            application.
+        </p>
+
+        <label>Applicant Name</label>
+        <input
+            type="text"
+            value="Kshitij Deshpande"
+            data-sensitive="true"
+        >
+
+        <label>Email</label>
+        <input
+            type="email"
+            value="kshitij.deshpande@example.com"
+            data-sensitive="true"
+        >
+
+        <label>Phone</label>
+        <input
+            type="tel"
+            value="+91 98765 43210"
+            data-sensitive="true"
+        >
+
+        <label>Position</label>
+        <select>
+            <option>Software Engineer Intern</option>
+            <option>Cloud Engineer</option>
+            <option>DevOps Engineer</option>
+            <option>Frontend Developer</option>
+        </select>
+
+        <label>Cover Letter</label>
+        <textarea>
+```
+
+I am interested in this position because I enjoy software engineering,
+cloud infrastructure and building practical systems. </textarea>
+
+```
+        <button class="success" onclick="submitJob()">
+            Submit Application
+        </button>
+    </section>
+
+
+    <!-- PAYMENT -->
+
+    <section class="card" id="payment">
+        <h3>💳 Payment Information</h3>
+
+        <p>Fake payment information for privacy testing.</p>
+
+        <div class="fake-card">
+            💳
+            <br><br>
+            4111 1111 1111 1111
+
+            <small>
+                CARD HOLDER: KSHITIJ DESHPANDE
+                <br>
+                EXP: 12/29
+                <br>
+                CVV: 123
+            </small>
+        </div>
+
+        <label>Card Number</label>
+        <input
+            type="text"
+            autocomplete="cc-number"
+            value="4111 1111 1111 1111"
+        >
+
+        <label>CVV</label>
+        <input
+            type="password"
+            autocomplete="cc-csc"
+            value="123"
+        >
+
+        <label>Billing Address</label>
+        <textarea>42 Example Residency
+```
+
+Thane West, Maharashtra
+400601</textarea>
+
+```
+        <button class="danger" onclick="paymentSubmit()">
+            Pay ₹4,999
+        </button>
+
+        <div class="sensitive">
+            🔴 Payment details must remain completely local.
+        </div>
+    </section>
+
+
+    <!-- EMAIL -->
+
+    <section class="card" id="email">
+        <h3>✉️ Email Composer</h3>
+
+        <label>Recipient</label>
+        <input
+            type="email"
+            value="hr@example-company.com"
+            autocomplete="email"
+        >
+
+        <label>Subject</label>
+        <input
+            type="text"
+            value="Application for Software Engineer Internship"
+        >
+
+        <label>Message</label>
+        <textarea>
+```
+
+Hello,
+
+I am writing to apply for the Software Engineer Internship position.
+
+Please find my resume attached.
+
+Regards,
+Kshitij Deshpande
++91 98765 43210
+[kshitij.deshpande@example.com](mailto:kshitij.deshpande@example.com) </textarea>
+
+```
+        <button onclick="sendEmail()">
+            Send Email
+        </button>
+    </section>
+
+
+    <!-- VISUAL CONTEXT -->
+
+    <section class="card">
+        <h3>👁️ Visual Context Test</h3>
+
+        <p>
+            This section is designed to test whether the local vision
+            model can understand visual context.
+        </p>
+
+        <div class="person">
+            👨🏻
+        </div>
+
+        <p>
+            <strong>Person detected</strong>
+        </p>
+
+        <p>
+            The agent should treat this as visual content that may
+            contain personally identifiable information.
+        </p>
+
+        <button onclick="visualAction()">
+            Continue
+        </button>
+    </section>
+
+</div>
+
+
+<!-- AGENT TASKS -->
+
+<section class="card" style="margin-top: 20px;">
+
+    <h3>🤖 Suggested Agent Tasks</h3>
+
+    <ol>
+        <li>
+            Identify all sensitive information on the page.
+        </li>
+
+        <li>
+            Create a sanitized representation of the page.
+        </li>
+
+        <li>
+            Determine which information can safely be sent to the server.
+        </li>
+
+        <li>
+            Find the "Submit Application" button.
+        </li>
+
+        <li>
+            Find the "Send Email" button.
+        </li>
+
+        <li>
+            Scroll to the payment section.
+        </li>
+
+        <li>
+            Identify the password fields.
+        </li>
+
+        <li>
+            Identify the person/face visible on the page.
+        </li>
+    </ol>
+
+    <div class="info">
+        <strong>Expected privacy transformation:</strong>
+
+        <br><br>
+
+        Kshitij Deshpande → [PERSON]
+
+        <br>
+
+        kshitij.deshpande@example.com → [EMAIL]
+
+        <br>
+
+        +91 98765 43210 → [PHONE]
+
+        <br>
+
+        42 Example Residency → [ADDRESS]
+
+        <br>
+
+        SuperSecretPassword123! → [PASSWORD]
+
+        <br>
+
+        4111 1111 1111 1111 → [CARD_NUMBER]
+    </div>
+
+</section>
+
+
+<footer>
+    SIH Privacy-Preserving Browser Agent — Local Test Environment
+</footer>
+```
+
+</main>
+
+<script>
+
+    function profileSubmit() {
+        alert("Profile saved locally.");
+    }
+
+    function submitJob() {
+        alert("Job application submitted.");
+    }
+
+    function paymentSubmit() {
+        alert("Demo payment action triggered.");
+    }
+
+    function sendEmail() {
+        alert("Demo email sent.");
+    }
+
+    function visualAction() {
+        alert("Visual-context action triggered.");
+    }
+
+</script>
+
+</body>
+</html>

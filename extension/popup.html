@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>Privacy Vision Agent</title>
+  <style>
+    body { font-family: system-ui, sans-serif; width: 340px; padding: 12px; }
+    h1 { font-size: 14px; margin: 0 0 8px; }
+    textarea { width: 100%; box-sizing: border-box; height: 56px; font-size: 13px; }
+    button { width: 100%; padding: 8px; margin-top: 8px; cursor: pointer; }
+    #status { font-size: 12px; color: #444; margin-top: 8px; white-space: pre-wrap; }
+    .metric { font-size: 11px; color: #666; }
+    .badge { display: inline-block; padding: 1px 6px; border-radius: 8px; background: #eee; margin: 2px; font-size: 10px; }
+  </style>
+</head>
+<body>
+  <h1>🔒 Privacy-Preserving Vision Agent</h1>
+  <textarea id="task" placeholder="e.g. Find the submit button and click it"></textarea>
+  <button id="run">Run on current tab</button>
+  <div id="status"></div>
+  <script src="popup.js"></script>
+</body>
+</html>
