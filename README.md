@@ -17,7 +17,7 @@ An end-to-end, privacy-preserving hybrid browser extension and server architectu
 
 ---
 
-## Directory Structure
+## Directory Structure (temp)
 
 ```text
 .
