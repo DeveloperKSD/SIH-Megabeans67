@@ -1,5 +1,7 @@
 # Privacy-Preserving On-Device Vision Browser Agent (SIH #26171)
 
+PPT: https://docs.google.com/presentation/d/1aEsCqlIv1UtZo1ZP2E_lEXmNy42ZsgeFBiGTTn85znA/edit?usp=sharing
+
 A working prototype split into two halves:
 
 - **`extension/`** — Chrome/Firefox MV3 extension. Runs a local ViT-based
